@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/png" href="/vite.svg" />
+
+    <!-- ✅ Viewport for responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ✅ Title -->
+    <title>BorrowBox</title>
+
+    <!-- ✅ Add a little default styling so blank screens show background color -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+        font-family: "Segoe UI", Roboto, sans-serif;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+
+    <!-- ✅ SEO + PWA metadata -->
+    <meta name="description" content="BorrowBox - Rent and lend tools, electronics, and more easily." />
+    <meta name="theme-color" content="#000000" />
+  </head>
+
+  <body>
+    <!-- ✅ Root mount point for React -->
+    <div id="root"></div>
+
+    <!-- ✅ Entry script -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
