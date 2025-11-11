@@ -83,7 +83,7 @@ export default function BorrowFormPage() {
     }
 
     const options = {
-      key: import.meta.env.RAZORPAY_API_KEY, // ✅ Your Razorpay test key
+      key: import.meta.env.VITE_RAZORPAY_API_KEY, // ✅ Your Razorpay test key
       amount: total * 100, // Amount in paise
       currency: "INR",
       name: "Borrow Box",
