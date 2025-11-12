@@ -1,157 +1,300 @@
-/* ========================= PROFILE.CSS ========================= */
+/* ========================= PROFILE.CSS - MODERN STYLE ========================= */
 .profile-container {
   max-width: 900px;
   margin: 50px auto;
   padding: 20px;
-  font-family: system-ui, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  color: #1f2937; /* Dark gray text */
+  background: #f9fafb; /* Light background */
 }
 
+/* ================= PROFILE HEADER ================= */
 .profile-header {
   background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 28px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   margin-bottom: 30px;
   text-align: center;
+  position: relative;
+  transition: transform 0.2s ease;
 }
 
-.logout-btn {
-  margin-top: 12px;
-  padding: 10px 18px;
-  background-color: #4f46e5;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.borrowed-section h3 {
-  margin-bottom: 16px;
-}
-
-.borrowed-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.borrowed-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.borrowed-card h4 {
-  margin-bottom: 8px;
-}
-
-.return-btn {
-  margin-top: 8px;
-  padding: 8px 12px;
-  background-color: #16a34a;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-/* ================= QR CODE BUTTON & MODAL ================= */
-.qr-btn {
-  background-color: #fff;
-  border: 1px solid #ced4da;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #495057;
-  margin-top: 8px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.qr-btn:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+.profile-header:hover {
   transform: translateY(-2px);
 }
 
-.qr-modal {
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.profile-header p {
+  font-size: 14px;
+  color: #4b5563; /* Medium gray */
+  margin: 4px 0;
+}
+
+/* Settings icon */
+.profile-header a {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 22px;
+  color: #4f46e5;
+  transition: color 0.2s ease;
+}
+
+.profile-header a:hover {
+  color: #4338ca;
+}
+
+/* Logout button */
+.logout-btn {
+  margin-top: 16px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+
+/* ================= BORROWED SECTION ================= */
+.borrowed-section h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Borrowed tools grid */
+.borrowed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Borrowed tool card */
+.borrowed-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.borrowed-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.borrowed-card h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.borrowed-card p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #4b5563;
+}
+
+/* Return Button */
+.return-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.return-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+}
+
+/* ================= QR MODAL ================= */
+.qr-modal,
+.review-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
-.qr-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+.qr-content,
+.review-content {
+  background: #fff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* QR Content */
+.qr-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #111827;
 }
 
 .close-qr-btn {
-  background-color: #495057;
-  color: white;
-  padding: 6px 12px;
-  margin-top: 10px;
+  background-color: #e5e7eb;
+  color: #111827;
+  padding: 10px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.close-qr-btn:hover {
+  background-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+/* ================= REVIEW FORM ================= */
+.review-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+/* Labels */
+.review-content label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  text-align: left;
+  width: 100%;
+}
+
+/* Select & Textarea */
+.review-content select,
+.review-content textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-size: 14px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-content select:focus,
+.review-content textarea:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* Textarea */
+.review-content textarea {
+  min-height: 80px;
+  resize: none;
+}
+
+/* Review buttons */
+.submit-review-btn,
+.close-review-btn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.submit-review-btn {
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: #fff;
+  margin-top: 10px;
+}
+
+.submit-review-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.close-review-btn {
+  background: #e5e7eb;
+  color: #111827;
+  margin-top: 8px;
+}
+
+.close-review-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-1px);
 }
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
+  .borrowed-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .profile-header {
+    padding: 20px;
+  }
+
+  .borrowed-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
   .profile-container {
     margin: 20px 12px;
     padding: 16px;
   }
 
   .borrowed-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-
-  .profile-header {
-    padding: 16px;
-  }
-
-  .logout-btn {
-    padding: 8px 14px;
-    font-size: 14px;
-  }
-
-  .borrowed-card {
-    padding: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-container {
-    margin: 10px 8px;
-    padding: 12px;
-  }
-
-  .borrowed-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .profile-header h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .borrowed-card h4 {
     font-size: 16px;
   }
 
-  .return-btn {
-    padding: 6px 10px;
+  .return-btn,
+  .submit-review-btn,
+  .close-review-btn {
+    padding: 10px;
     font-size: 14px;
   }
 }

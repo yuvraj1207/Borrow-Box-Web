@@ -83,8 +83,8 @@ export default function BorrowFormPage() {
     }
 
     const options = {
-      key: import.meta.env.VITE_RAZORPAY_API_KEY, // ✅ Your Razorpay test key
-      amount: total * 100, // Amount in paise
+      key: import.meta.env.VITE_RAZORPAY_API_KEY,
+      amount: total * 100,
       currency: "INR",
       name: "Borrow Box",
       description: `Payment for ${tool.name}`,
@@ -92,8 +92,6 @@ export default function BorrowFormPage() {
         setBorrowing(true);
         try {
           const user = auth.currentUser;
-
-          // 1️⃣ Update tool document
           const toolRef = doc(db, "tools", id);
           await updateDoc(toolRef, {
             borrowed: true,
@@ -101,7 +99,6 @@ export default function BorrowFormPage() {
             totalCost: total,
           });
 
-          // 2️⃣ Add borrow history
           await addDoc(collection(db, "borrowHistory"), {
             userId: user.uid,
             userName: user.displayName || "Anonymous",
@@ -127,14 +124,13 @@ export default function BorrowFormPage() {
         name: auth.currentUser?.displayName || "User",
         email: auth.currentUser?.email,
       },
-      theme: { color: "#111" },
+      theme: { color: "#4CAF50" },
     };
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };
 
-  // 🕓 Loading / Not Found States
   if (loading)
     return (
       <div style={{ textAlign: "center", padding: "50px" }}>
@@ -149,16 +145,15 @@ export default function BorrowFormPage() {
       </div>
     );
 
-  // 🧱 Main Render
   return (
     <div
       style={{
         padding: "32px",
-        maxWidth: "700px",
+        maxWidth: "720px",
         margin: "0 auto",
         fontFamily: "system-ui, sans-serif",
-        color: "#111",
-        backgroundColor: "#f7f7f7",
+        color: "#222",
+        backgroundColor: "#f4f6f5",
         minHeight: "100vh",
       }}
     >
@@ -167,7 +162,7 @@ export default function BorrowFormPage() {
         onClick={() => navigate(-1)}
         style={{
           background: "transparent",
-          color: "#111",
+          color: "#222",
           border: "1px solid #ccc",
           padding: "8px 16px",
           borderRadius: "8px",
@@ -205,18 +200,46 @@ export default function BorrowFormPage() {
           marginBottom: "24px",
         }}
       >
-        <h2 style={{ marginBottom: "10px", fontSize: "22px" }}>
-          Borrow <span style={{ color: "#111" }}>{tool.name}</span>
+        <h2 style={{ marginBottom: "10px", fontSize: "22px", color: "#222" }}>
+          Borrow <span style={{ color: "#4CAF50" }}>{tool.name}</span>
         </h2>
-        <p>
-          <strong>Category:</strong> {tool.category}
+
+        <p
+          style={{
+            fontSize: "16px",
+            marginBottom: "6px",
+          }}
+        >
+          <strong>📂 Category:</strong>{" "}
+          <span style={{ fontSize: "17px", color: "#222" }}>
+            {tool.category}
+          </span>
         </p>
         <p>
-          <strong>Price/Day:</strong> ₹{tool.price}
+          <strong>💰 Price/Day:</strong> ₹{tool.price}
         </p>
         <p>
-          <strong>Location:</strong> {tool.location}
+          <strong>📍 Location:</strong> {tool.location}
         </p>
+
+        {/* 📞 Contact Lender */}
+        <button
+          onClick={() =>
+            (window.location.href = `mailto:${tool.lenderEmail}?subject=Inquiry about ${tool.name}`)
+          }
+          style={{
+            marginTop: "14px",
+            padding: "10px 16px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "600",
+          }}
+        >
+          📩 Contact Lender
+        </button>
       </div>
 
       {/* 🧾 Borrow Form */}
@@ -228,14 +251,18 @@ export default function BorrowFormPage() {
           boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
         }}
       >
-        <label htmlFor="days" style={{ display: "block", marginBottom: "8px" }}>
-          <strong>Number of Days:</strong>
+        <label
+          htmlFor="days"
+          style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}
+        >
+          Number of Days <span style={{ color: "red" }}>*</span>
         </label>
         <input
           id="days"
           type="number"
           min="1"
           value={days}
+          required
           onChange={(e) => setDays(Number(e.target.value))}
           style={{
             width: "100%",
@@ -248,15 +275,22 @@ export default function BorrowFormPage() {
         />
 
         <p style={{ marginBottom: "12px", fontWeight: "500" }}>
-          💰 Total Cost:{" "}
-          <span style={{ color: "#16a34a", fontWeight: "600" }}>₹{total}</span>
+          💵 Total Cost:{" "}
+          <span style={{ color: "#4CAF50", fontWeight: "600" }}>₹{total}</span>
         </p>
 
         {/* ✅ Terms & Conditions */}
-        <label style={{ display: "flex", alignItems: "center", marginBottom: "16px" }}>
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "16px",
+          }}
+        >
           <input
             type="checkbox"
             checked={agreeTerms}
+            required
             onChange={(e) => setAgreeTerms(e.target.checked)}
             style={{ marginRight: "8px" }}
           />
@@ -264,7 +298,7 @@ export default function BorrowFormPage() {
             I agree to the{" "}
             <a
               href="/terms"
-              style={{ color: "#2563eb", textDecoration: "underline" }}
+              style={{ color: "#4CAF50", textDecoration: "underline" }}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -279,7 +313,7 @@ export default function BorrowFormPage() {
           style={{
             width: "100%",
             padding: "12px",
-            backgroundColor: !agreeTerms ? "#999" : "#111",
+            backgroundColor: !agreeTerms ? "#ccc" : "#4CAF50",
             color: "white",
             border: "none",
             borderRadius: "8px",

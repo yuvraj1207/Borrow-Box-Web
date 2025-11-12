@@ -8,7 +8,7 @@ export default function BottomNav() {
     flex: 1,
     padding: "10px",
     textAlign: "center",
-    background: pathname === path ? "#4f46e5" : "#fff",
+    background: pathname === path ? "#141416ff" : "#fff",
     color: pathname === path ? "#fff" : "#333",
     borderTop: "1px solid #ddd",
     textDecoration: "none",

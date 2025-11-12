@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase"; // Firebase Firestore instance
+import { useAuth } from "../context/AuthContext"; // Custom auth context
 import { FaArrowLeft, FaStar, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import "./ToolDetailPage.css";
 
 export default function ToolDetailPage() {
-  const { id } = useParams();
+  const { id } = useParams(); // Get tool id from URL
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [tool, setTool] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
 
+  // Fetch tool details from Firestore
   useEffect(() => {
     const fetchTool = async () => {
       try {
@@ -21,6 +22,7 @@ export default function ToolDetailPage() {
           const data = snap.data();
           setTool(data);
 
+          // Handle image bytes (if stored as binary) or URL
           if (data.imageBytes) {
             const blob = new Blob([new Uint8Array(data.imageBytes)], { type: "image/jpeg" });
             setImageUrl(URL.createObjectURL(blob));
@@ -35,36 +37,40 @@ export default function ToolDetailPage() {
     fetchTool();
   }, [id]);
 
+  // Delete tool (only for owner)
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     await deleteDoc(doc(db, "tools", id));
     alert("Tool deleted successfully!");
-    navigate("/");
+    navigate("/"); // Redirect after deletion
   };
 
+  // Navigate to borrow page
   const handleBorrow = () => navigate(`/borrow/${id}`);
 
+  // Show loading if tool data not yet fetched
   if (!tool) return <div className="loading">Loading...</div>;
 
+  // Check if current user is the owner of the tool
   const isOwner = currentUser && currentUser.uid === tool.ownerId;
 
   return (
     <div className="tool-page">
 
-      {/* ✅ Header */}
+      {/* Header with back button */}
       <header className="tool-header">
         <button className="back-btn" onClick={() => navigate(-1)}>
           <FaArrowLeft size={20} />
         </button>
         <h1>Item Details</h1>
-        <div style={{ width: "24px" }}></div>
+        <div style={{ width: "24px" }}></div> {/* Spacer for alignment */}
       </header>
 
-      {/* ✅ Scrollable Content */}
+      {/* Scrollable content */}
       <main className="tool-content">
 
-        {/* Top Image */}
+        {/* Top Image with owner overlay */}
         <div className="tool-image-box">
           {imageUrl ? (
             <img src={imageUrl} alt={tool.name} />
@@ -72,14 +78,14 @@ export default function ToolDetailPage() {
             <div className="no-image">No Image Available</div>
           )}
 
-          {/* Lender overlay */}
+          {/* Owner badge overlay */}
           <div className="owner-badge">
             <div className="owner-avatar"></div>
             <span>{tool.ownerName || "Lender"}</span>
           </div>
         </div>
 
-        {/* ✅ Title + Price */}
+        {/* Title and Price */}
         <div className="top-row">
           <h2>{tool.name}</h2>
           <div className="price-box">
@@ -88,13 +94,13 @@ export default function ToolDetailPage() {
           </div>
         </div>
 
-        {/* ✅ Tags */}
+        {/* Tags / categories */}
         <div className="tag-row">
           <span className="tag">Tools</span>
           <span className="tag">AI Recommended</span>
         </div>
 
-        {/* ✅ Rating + Distance */}
+        {/* Rating and Distance */}
         <div className="rating-row">
           <div className="rating-item">
             <FaStar className="star" /> {tool.rating || "4.8"} ({tool.reviews || "42"} reviews)
@@ -105,13 +111,13 @@ export default function ToolDetailPage() {
           </div>
         </div>
 
-        {/* ✅ Description */}
+        {/* Description */}
         <section>
           <h3>Description</h3>
           <p className="desc">{tool.description}</p>
         </section>
 
-        {/* ✅ Pickup Location */}
+        {/* Pickup Location */}
         <section>
           <h3>Pickup Location</h3>
           <div className="pickup-card">
@@ -129,7 +135,7 @@ export default function ToolDetailPage() {
           </div>
         </section>
 
-        {/* ✅ Lender section */}
+        {/* Lender section (to be updated with proper details) */}
         <section>
           <h3>Lender</h3>
           <p className="lender-desc">
@@ -137,7 +143,7 @@ export default function ToolDetailPage() {
           </p>
         </section>
 
-        {/* ✅ Buttons */}
+        {/* Action Buttons */}
         <div className="action-row">
           {isOwner ? (
             <button className="delete-btn" onClick={handleDelete}>Delete Tool</button>
@@ -154,13 +160,14 @@ export default function ToolDetailPage() {
 
       </main>
 
-      {/* ✅ Sticky Footer */}
+      {/* Sticky Footer (blue button commented out) */}
       <footer className="tool-footer">
-        <button className="book-btn">
+        {/* <button className="book-btn">
           <FaCalendarAlt /> Book Now
-        </button>
+        </button> */}
         <p className="verify-msg">You'll verify item condition before pickup</p>
       </footer>
+
     </div>
   );
 }

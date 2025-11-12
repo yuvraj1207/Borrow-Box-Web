@@ -30,7 +30,7 @@ export default function ToolCard({ tool }) {
           to={`/tool/${tool.id}`}
           style={{
             display: "inline-block",
-            backgroundColor: "#007bff",
+            backgroundColor: "#131416ff",
             color: "white",
             textDecoration: "none",
             padding: "8px 14px",
