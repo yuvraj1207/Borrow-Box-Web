@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom"; // ✅ Added Link
 import {
   doc,
   getDoc,
@@ -296,14 +296,13 @@ export default function BorrowFormPage() {
           />
           <span>
             I agree to the{" "}
-            <a
-              href="/terms"
+            {/* ✅ Replaced <a href> with <Link> */}
+            <Link
+              to="/terms"
               style={{ color: "#4CAF50", textDecoration: "underline" }}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Terms & Conditions
-            </a>
+            </Link>
           </span>
         </label>
 
