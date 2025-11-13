@@ -297,7 +297,7 @@ export default function BorrowFormPage() {
           <span>
             I agree to the{" "}
             <a
-              href="/terms/{id}"
+              href="/terms"
               style={{ color: "#4CAF50", textDecoration: "underline" }}
               target="_blank"
               rel="noopener noreferrer"
